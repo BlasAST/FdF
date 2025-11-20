@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bsiguenc <bsiguenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/29 13:07:42 by bsiguenc          #+#    #+#             */
-/*   Updated: 2025/11/20 15:22:46 by bsiguenc         ###   ########.fr       */
+/*   Created: 2025/04/10 10:39:05 by bsiguenc          #+#    #+#             */
+/*   Updated: 2025/04/10 11:28:49 by bsiguenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "libft.h"
 
-void	error_ex(char *str, int error)
+int	ft_toupper(int c)
 {
-	write(2, str, ft_strlen(str));
-	exit(error);
+	if (c >= 'a' && c <= 'z')
+		c -= 32;
+	return (c);
 }

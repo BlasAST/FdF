@@ -35,6 +35,11 @@ SRC=ft_isalpha.c \
 	ft_putstr_fd.c \
 	ft_putendl_fd.c \
 	ft_putnbr_fd.c \
+	ft_printf/ft_printf.c \
+	ft_printf/src/ft_utils.c\
+	ft_printf/src/ft_utils2.c \
+	gnl/get_next_line_utils.c \
+	gnl/get_next_line.c
 
 SRC_BONUS= ft_lstnew_bonus.c \
 	ft_lstadd_front_bonus.c \
@@ -46,16 +51,8 @@ SRC_BONUS= ft_lstnew_bonus.c \
 	ft_lstiter_bonus.c \
 	ft_lstmap_bonus.c
 
-SRC_PRINTF= ft_printf/ft_printf.c \
-	ft_printf/src/ft_utils.c\
-	ft_printf/src/ft_utils2.c
-SRC_GNL = gnl/get_next_line_utils.c \
-	gnl/get_next_line.c
-
 OBJ= $(SRC:.c=.o)
 OBJ_BONUS= $(SRC_BONUS:.c=.o)
-OBJ_PRINTF= $(SRC_PRINTF:.c=.o)
-OBJ_GNL = $(SRC_GNL:.c=.o)
 ARFLAGS= rcs
 
 all: $(NAME)
@@ -63,19 +60,16 @@ all: $(NAME)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-ft_printf/%.c : ft_printf/%.o
+$(NAME): $(OBJ)
 	make -C ft_printf all
-	$(CC) $(FLAGS) -c $< -o $@
-
-gnl/%.c : gnl/%.o
-	$(CC) $(FLAGS) -c $< -o $@
-
-$(NAME): $(OBJ) $(OBJ_PRINTF) $(OBJ_GNL)
-	make -C ft_printf all
-	ar $(ARFLAGS) $(NAME) $(OBJ) $(OBJ_PRINTF) $(OBJ_GNL)
+	ar $(ARFLAGS) $(NAME) $(OBJ)
 
 clean:
-	rm -f $(OBJ) $(OBJ_BONUS) $(OBJ_GNL)
+	rm -f $(OBJ)
+	make -C ft_printf clean
+
+clean_bonus:
+	rm -f $(OBJ) $(OBJ_BONUS)
 	make -C ft_printf clean
 
 fclean: clean
@@ -84,8 +78,10 @@ fclean: clean
 
 fclean_bonus: clean_bonus
 	rm -f $(NAME)
+	make -C ft_printf fclean
 
 bonus: $(OBJ_BONUS) $(OBJ)
+	make -C ft_printf all
 	ar $(ARFLAGS) $(NAME) $(OBJ) $(OBJ_BONUS)
 
 re: fclean all
